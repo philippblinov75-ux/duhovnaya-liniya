@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Регистрация — Духовная линия</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Регистрация</h1>
+      <p class="subtitle" id="roleLabel">Роль: —</p>
+    </header>
+
+    <form class="card form" id="registerForm">
+      <label class="label">Имя
+        <input class="input" type="text" name="displayName" required placeholder="Иван">
+      </label>
+
+      <label class="label">Email
+        <input class="input" type="email" name="email" required placeholder="you@example.com">
+      </label>
+
+      <label class="label">Пароль
+        <input class="input" type="password" name="password" minlength="6" required placeholder="•••••••">
+      </label>
+
+      <div class="row gap">
+        <button class="btn btn-primary" type="submit">Создать аккаунт</button>
+        <a class="btn btn-ghost" href="index.html">Назад</a>
+      </div>
+
+      <p class="tiny">
+        Регистрируясь, вы соглашаетесь с <a href="terms.html">Условиями</a> и <a href="privacy.html">Политикой конфиденциальности</a>.
+      </p>
+    </form>
+  </main>
+
+  <script src="scripts/register.js"></script>
+</body>
+</html>

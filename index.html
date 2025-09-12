@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Духовная линия — вход</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+      });
+    }
+  </script>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Духовная линия</h1>
+      <p class="subtitle">Выберите, кто вы</p>
+    </header>
+
+    <section class="card">
+      <button class="btn btn-primary" onclick="selectRole('parishioner')">Я прихожанин</button>
+      <button class="btn btn-secondary" onclick="selectRole('priest')">Я батюшка</button>
+      <p class="hint">Роль можно изменить позже в настройках.</p>
+    </section>
+
+    <footer class="footer">
+      <a href="privacy.html" class="link">Конфиденциальность</a>
+      <span>•</span>
+      <a href="terms.html" class="link">Условия</a>
+    </footer>
+  </main>
+
+  <script src="scripts/role.js"></script>
+</body>
+</html>

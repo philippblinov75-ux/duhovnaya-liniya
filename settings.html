@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Настройки — Духовная линия</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Настройки</h1>
+    </header>
+
+    <section class="card">
+      <label class="label">Текущая роль
+        <select id="roleSelect" class="input">
+          <option value="parishioner">Прихожанин</option>
+          <option value="priest">Батюшка</option>
+        </select>
+      </label>
+      <div class="row gap">
+        <button id="saveRole" class="btn btn-primary">Сохранить</button>
+        <a href="home.html" class="btn btn-ghost">Назад</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <button id="logout" class="btn btn-danger">Выйти</button>
+    </section>
+  </main>
+
+  <script src="scripts/settings.js"></script>
+</body>
+</html>

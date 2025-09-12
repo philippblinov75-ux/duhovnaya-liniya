@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Запись — Духовная линия</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Записать сообщение</h1>
+      <p class="subtitle">Нажмите и удерживайте, чтобы записать.</p>
+    </header>
+
+    <section class="card center">
+      <button id="recordBtn" class="record-btn" aria-label="Запись"></button>
+      <div id="status" class="status">Готово</div>
+      <audio id="player" controls class="hidden"></audio>
+      <div class="row gap">
+        <button id="sendBtn" class="btn btn-primary" disabled>Отправить</button>
+        <a href="home.html" class="btn btn-ghost">Отмена</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts/record.js"></script>
+</body>
+</html>
