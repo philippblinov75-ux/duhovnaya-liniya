@@ -1,40 +1,19 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Духовная линия — вход</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#111827">
-  <link rel="stylesheet" href="styles.css">
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
-      });
-    }
-  </script>
-</head>
-<body>
-  <main class="container">
-    <header class="header">
-      <h1>Духовная линия</h1>
-      <p class="subtitle">Выберите, кто вы</p>
-    </header>
-
-    <section class="card">
-      <button class="btn btn-primary" onclick="selectRole('parishioner')">Я прихожанин</button>
-      <button class="btn btn-secondary" onclick="selectRole('priest')">Я батюшка</button>
-      <p class="hint">Роль можно изменить позже в настройках.</p>
-    </section>
-
-    <footer class="footer">
-      <a href="privacy.html" class="link">Конфиденциальность</a>
-      <span>•</span>
-      <a href="terms.html" class="link">Условия</a>
-    </footer>
-  </main>
-
-  <script src="scripts/role.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Духовная линия · Кабинет батюшки (MVP)</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div id="root"></div>
+    <!-- Our app (JSX) -->
+    <script type="text/babel" src="app.jsx"></script>
+  </body>
 </html>
