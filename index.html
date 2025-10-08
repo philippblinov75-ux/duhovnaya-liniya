@@ -1,18 +1,187 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Духовная линия · Кабинет батюшки — Шаг 6 (без кнопки «Сохранить»)</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body class="bg-gray-100">
-    <div id="root"></div>
-    <script type="text/babel" src="app.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Priest Dashboard — Духовная линия</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <h1 class="logo">Priest Dashboard</h1>
+      <nav class="nav">
+        <button class="nav-btn" data-route="home">Главная</button>
+        <button class="nav-btn" data-route="register">Регистрация прихода</button>
+        <button class="nav-btn" data-route="moderator">Панель модератора</button>
+        <button class="nav-btn" data-route="priest">Кабинет батюшки</button>
+        <button class="nav-btn" data-route="parishioner">Кабинет прихожанина</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME -->
+    <section id="view-home" class="view active">
+      <div class="card intro">
+        <h2>Духовная линия — прототип</h2>
+        <p>Тёмная тема, подсвеченные кнопки и вкладки. Вся логика из ранних версий сохранена: регистрация → модерация → общение (текст/аудио) → пожертвования → свечи.</p>
+        <div class="grid2">
+          <div class="card">
+            <h3>Быстрый старт</h3>
+            <ol class="list">
+              <li>Зарегистрируй приход (вкладка «Регистрация прихода»).</li>
+              <li>Одобри в «Панели модератора».</li>
+              <li>Зайди в «Кабинет батюшки» — доступно общение и рассылки.</li>
+              <li>В «Кабинете прихожанина» выбери свой приход и общайся/делай пожертвования/покупай свечи.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>Особенности</h3>
+            <ul class="list">
+              <li>Текстовые и голосовые сообщения (MediaRecorder).</li>
+              <li>Пожертвования и свечи — отдельные вкладки, видны батюшке.</li>
+              <li>Массовые сообщения батюшки одному/нескольким/всем прихожанам.</li>
+              <li>Публичная страница прихода по ссылке <code>parish.html?slug=&lt;slug&gt;</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="view-register" class="view">
+      <div class="card">
+        <div class="split">
+          <h2>Регистрация прихода</h2>
+          <button class="btn ghost" data-route="moderator">Панель модератора</button>
+        </div>
+
+        <form id="registerForm" class="form">
+          <div class="grid2">
+            <div class="form-group">
+              <label>Имя батюшки</label>
+              <input type="text" id="priestName" placeholder="напр. отец Елпидифор" required>
+            </div>
+            <div class="form-group">
+              <label>Название прихода</label>
+              <input type="text" id="parishName" placeholder="напр. Храм св. великомученика Георгия на Холмах" required>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="form-group">
+              <label>Населённый пункт</label>
+              <input type="text" id="location" placeholder="деревня/город, регион" required>
+            </div>
+            <div class="form-group">
+              <label>Публичная ссылка (генерируется)</label>
+              <input type="text" id="publicUrl" readonly>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Описание храма</label>
+            <textarea id="description" rows="4" placeholder="Коротко о храме, святынях, расписании и т.д."></textarea>
+          </div>
+
+          <div class="grid2">
+            <div class="form-group">
+              <label>Аватар батюшки (jpg/png)</label>
+              <input type="file" id="priestAvatar" accept="image/*">
+            </div>
+            <div class="form-group">
+              <label>Фото храма (jpg/png)</label>
+              <input type="file" id="parishPhoto" accept="image/*">
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn primary">Отправить на модерацию</button>
+            <button type="reset" class="btn">Сбросить форму</button>
+          </div>
+
+          <p class="muted">Подсказка: публичная страница после аппрува откроется по адресу
+            <code>parish.html?slug=&lt;slug&gt;</code>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- MODERATOR -->
+    <section id="view-moderator" class="view">
+      <div class="card">
+        <div class="split">
+          <h2>Панель модератора</h2>
+          <button class="btn ghost" data-route="register">← К регистрации</button>
+        </div>
+
+        <div class="tabs" data-tabs="moderation">
+          <button class="tab active" data-tab="pending">Pending</button>
+          <button class="tab" data-tab="approved">Approved</button>
+          <button class="tab" data-tab="declined">Declined</button>
+        </div>
+
+        <div id="modLists" class="stack"></div>
+      </div>
+    </section>
+
+    <!-- PRIEST -->
+    <section id="view-priest" class="view">
+      <div class="card">
+        <h2>Кабинет батюшки</h2>
+
+        <div class="form group-inline">
+          <div class="form-group">
+            <label>Выберите свой приход</label>
+            <select id="priestParishSelect"></select>
+          </div>
+        </div>
+
+        <div class="tabs" data-tabs="priest">
+          <button class="tab active" data-tab="dialogs">Сообщения</button>
+          <button class="tab" data-tab="donations">Пожертвования</button>
+          <button class="tab" data-tab="candles">Свечи</button>
+        </div>
+
+        <div id="priestTabContent" class="stack"></div>
+      </div>
+    </section>
+
+    <!-- PARISHIONER -->
+    <section id="view-parishioner" class="view">
+      <div class="card">
+        <h2>Кабинет прихожанина</h2>
+
+        <div class="grid2">
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input id="userName" type="text" placeholder="Имя прихожанина">
+          </div>
+          <div class="form-group">
+            <label>Выберите приход</label>
+            <select id="userParishSelect"></select>
+          </div>
+        </div>
+
+        <div class="tabs" data-tabs="user">
+          <button class="tab active" data-tab="u-dialogs">Обращения</button>
+          <button class="tab" data-tab="u-donations">Пожертвования</button>
+          <button class="tab" data-tab="u-candles">Свечи</button>
+        </div>
+
+        <div id="userTabContent" class="stack"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>© Духовная линия — прототип. Локальное хранилище, без сервера.</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
 </html>

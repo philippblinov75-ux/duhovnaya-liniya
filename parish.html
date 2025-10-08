@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Публичная страница прихода — Духовная линия</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="container">
+            <div class="topbar-inner">
+                <a href="index.html#home" class="logo">Духовная линия</a>
+                <a href="index.html#moderator" class="nav-btn">← К модерации</a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div id="publicContent" class="view active">
+                <!-- Контент генерируется JS -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            © Духовная линия — прототип. Локальное хранилище, без сервера.
+        </div>
+    </footer>
+
+    <script>
+        /* Загрузка состояния (дублирует app.js для независимости) */
+        const LS_KEY = 'dl_state_v1';
+        const emptyState = {
+            parishes: [],
+        };
+        let state = loadState();
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(LS_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            const s = structuredClone(emptyState);
+            saveState(s);
+            return s;
+        }
+        function saveState(s = state) {
+            localStorage.setItem(LS_KEY, JSON.stringify(s));
+        }
+
+        /* Парсинг URL */
+        function getSlugFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('slug');
+        }
+
+        /* Рендер публичной страницы */
+        function renderPublicPage() {
+            const slug = getSlugFromUrl();
+            const content = $('#publicContent');
+            content.innerHTML = '';
+
+            if (!slug) {
+                content.appendChild(el('div', { class: 'card muted' }, 'Ошибка: не указан slug прихода.'));
+                return;
+            }
+
+            const parish = state.parishes.find(p => p.slug === slug && p.status === 'approved');
+            if (!parish) {
+                content.appendChild(el('div', { class: 'card muted' }, `Приход с slug "${slug}" не найден или не одобрен.`));
+                return;
+            }
+
+            const card = el('div', { class: 'card' });
+            const header = el('div', { class: 'split' }, el('h1', {}, parish.parishName));
+            card.appendChild(header);
+
+            // Фото храма
+            if (parish.parishPhoto) {
+                const img = el('img', { style: 'width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 16px;' });
+                img.src = parish.parishPhoto;
+                card.appendChild(img);
+            }
+
+            // Инфо
+            const info = el('div', { class: 'stack' });
+            info.appendChild(el('div', { class: 'kv' }, `Священник: <strong>${parish.priestName}</strong>`));
+            if (parish.priestAvatar) {
+                const avatar = el('img', { src: parish.priestAvatar, style: 'width: 80px; height: 80px; border-radius: 50%; object-fit: cover; float: right;' });
+                info.appendChild(avatar);
+            }
+            info.appendChild(el('div', { class: 'kv' }, `Местоположение: <strong>${parish.location}</strong>`));
+            info.appendChild(el('div', {}, parish.description || 'Описание храма будет добавлено после модерации.'));
+
+            // Кнопка в кабинет
+            const actions = el('div', { class: 'actions', style: 'margin-top: 20px;' });
+            const goToCabinet = el('a', { href: `index.html#parishioner?parish=${parish.id}`, class: 'btn primary' }, 'Перейти в кабинет прихожанина');
+            actions.appendChild(goToCabinet);
+            info.appendChild(actions);
+
+            card.appendChild(info);
+            content.appendChild(card);
+        }
+
+        /* Helpers (дублирует app.js) */
+        function el(tag, attrs = {}, ...children) {
+            const node = document.createElement(tag);
+            if (attrs && typeof attrs === 'object') {
+                Object.entries(attrs).forEach(([k, v]) => {
+                    if (k === 'class') node.className = v;
+                    else if (k === 'html') node.innerHTML = v;
+                    else node.setAttribute(k, v);
+                });
+            }
+            children.forEach(ch => {
+                if (ch == null) return;
+                if (typeof ch === 'string') node.appendChild(document.createTextNode(ch));
+                else node.appendChild(ch);
+            });
+            return node;
+        }
+        const $ = (sel, root = document) => root.querySelector(sel);
+
+        /* Инициализация */
+        document.addEventListener('DOMContentLoaded', renderPublicPage);
+    </script>
+</body>
+</html>
